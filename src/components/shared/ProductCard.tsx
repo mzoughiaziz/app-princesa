@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { Tool, InputEnum } from "../screens/Index";
+import { Product, InputEnum } from "../screens/Index";
 import { PencilSquareIcon, CheckIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 
-interface ToolCardProps {
-    tool: Tool,
-    onUpdate: (data: Partial<Tool>) => void
+interface ProductCardProps {
+    tool: Product,
+    onUpdate: (data: Partial<Product>) => void
 }
 
 
-const ToolCard = ({ tool, onUpdate }: ToolCardProps) => {
+const ProductCard = ({ tool, onUpdate }: ProductCardProps) => {
     const [isEdit, setIsEdit] = useState<boolean>(false);
-    const [inputData, setInputData] = useState<Partial<Tool>>(tool);
+    const [inputData, setInputData] = useState<Partial<Product>>(tool);
 
     const toggleIsEdit = () => setIsEdit(prevIsEdit => !prevIsEdit);
 
@@ -48,28 +48,43 @@ const ToolCard = ({ tool, onUpdate }: ToolCardProps) => {
                 'cursor-text': isEdit
               })
             } 
-            value={inputData.title} 
-            onChange={(e) => handleInputChange(InputEnum.Title, e.target.value)}
+            value={inputData.name}
+            placeholder="Nome do produto"
+            onChange={(e) => handleInputChange(InputEnum.Name, e.target.value)}
             />
           <input className={clsx(inputClasses, {
             'bg-gray-900': isEdit,
             'cursor-text': isEdit
           })} 
-          value={inputData.description}
-          onChange={(e) => handleInputChange(InputEnum.Description, e.target.value)}
+          value={inputData.details}
+          placeholder="Detalhes do produto"
+          onChange={(e) => handleInputChange(InputEnum.Details, e.target.value)}
+          />
+          <input className={clsx(inputClasses, {
+            'bg-gray-900': isEdit,
+            'cursor-text': isEdit
+          })} 
+          value={inputData.category}
+          placeholder="Categoria"
+          onChange={(e) => handleInputChange(InputEnum.Category, e.target.value)}
+          />
+          <input className={clsx(inputClasses, {
+            'bg-gray-900': isEdit,
+            'cursor-text': isEdit
+          })} 
+          value={inputData.price}
+          placeholder="Preco do Produto"
+          onChange={(e) => handleInputChange(InputEnum.Price, e.target.value)}
+          />
+          <input className={clsx(inputClasses, {
+            'bg-gray-900': isEdit,
+            'cursor-text': isEdit
+          })} 
+          value={inputData.image}
+          placeholder="URL da Imagem"
+          onChange={(e) => handleInputChange(InputEnum.Image, e.target.value)}
           />
         </div>
-        <input className={
-            clsx(inputClasses, 
-                "text-slate-400",
-                {
-                'bg-gray-900': isEdit,
-                'cursor-text': isEdit
-              })
-            } 
-            value={tool.url}
-            onChange={(e) => handleInputChange(InputEnum.Url, e.target.value)}
-             />
         {
             isEdit ?
             <>        
@@ -84,4 +99,4 @@ const ToolCard = ({ tool, onUpdate }: ToolCardProps) => {
     )
     }
 
-export default ToolCard;
+export default ProductCard;

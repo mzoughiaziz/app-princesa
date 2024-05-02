@@ -11,7 +11,7 @@ function Layout() {
   return (
     <div>
       <nav className="p-4 flex text-white items-center justify-between bg-slate-800">
-        <p className="text-3xl">Tools <span className="text-purple-500">AI</span></p>
+        <p className="text-3xl">Produtos <span className="text-purple-500">Princesa Joias</span></p>
       </nav>
       <Outlet />
     </div>
