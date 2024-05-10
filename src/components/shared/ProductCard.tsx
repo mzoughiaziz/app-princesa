@@ -38,7 +38,7 @@ const ProductCard = ({ tool, onUpdate }: ProductCardProps) => {
     )
 
     return (
-        <div key={tool.id} className="h-48 group relative rounded-md flex flex-col justify-between shadow-slate-900 shadow-md p-4 bg-gradient-to-r from-slate-800 to-slate-700">
+        <div key={tool.id} className="group relative rounded-md flex flex-col justify-between shadow-slate-900 shadow-md p-4 bg-gradient-to-r from-slate-800 to-slate-700 mb-4">
         <div>
           <input className={
             clsx(inputClasses,

@@ -44,6 +44,16 @@ function Index() {
     price: '',
     category: '',
   });
+  
+  let categoriesList = [
+    "colares-pingentes",
+    "aneis",
+    "brincos",
+    "alianca-noivado",
+    "pulseira",
+    "alianca-namoro"
+  ];
+
   const [image, setImage] = useState("");
   const [formError, setFormError] = useState<boolean>(false);
 
@@ -131,58 +141,86 @@ function Index() {
 
   return (
     <>
-      <Head title="TOP PAGE" />
-      <div className="hero min-h-screen bg-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">  <form className="flex items-center" onSubmit={handleFormSubmit}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">  <input
-                type="text"
-                onChange={(e) => handleInputChange(InputEnum.Name, e.target.value)}
-                value={inputData.name}
-                placeholder="Nome do produto"
-                className="m-2 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg"
-              />
-              <input
-                type="text"
-                onChange={(e) => handleInputChange(InputEnum.Details, e.target.value)}
-                value={inputData.details}
-                placeholder="Detalhes"
-                className="m-2 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg"
-              />
-              <input
-                type="text"
-                onChange={(e) => handleInputChange(InputEnum.Image, e.target.value)}
-                value={inputData.image}
-                placeholder="Imagem"
-                className="m-2 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg"
-              />
-              <input
-                type="text"
-                onChange={(e) => handleInputChange(InputEnum.Category, e.target.value)}
-                value={inputData.category}
-                placeholder="Categoria"
-                className="m-2 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg"
-              />
-              <input
-                type="text"
-                onChange={(e) => handleInputChange(InputEnum.Price, e.target.value)}
-                value={inputData.price}
-                placeholder="Preço"
-                className="m-2 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg"
-              />
+      <Head title="" />
+      <div className="hero max-w-md mx-auto shadow-md md:max-w-2xl bg-slate-800">
+        <div className="md:flex">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">  
+            <form onSubmit={handleFormSubmit}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">  
+                <div className="text-amber-100 px-3 grid">
+                  Nome do produto
+                  <input
+                    type="text"
+                    onChange={(e) => handleInputChange(InputEnum.Name, e.target.value)}
+                    value={inputData.name}
+                    placeholder="Exemplo: Anel formatura ouro 18k"
+                    className="m-2 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg"
+                    required
+                  />
+                </div>
+                <div className="text-amber-100 px-3 grid">
+                  Detalhes do produto
+                  <input
+                    type="text"
+                    onChange={(e) => handleInputChange(InputEnum.Details, e.target.value)}
+                    value={inputData.details}
+                    placeholder="Exemplo: 1.85 grama Pedra zirconia"
+                    className="m-2 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg"
+                    required
+                  />
+                </div>
+                <div className="text-amber-100 px-3 grid">
+                  Imagem do produto
+                  <input
+                    type="text"
+                    onChange={(e) => handleInputChange(InputEnum.Image, e.target.value)}
+                    value={inputData.image}
+                    placeholder="Imagem"
+                    className="m-2 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg"
+                    required
+                  />
+                </div>
+                <div className="text-amber-100 grid px-3">
+                  Categoria do produto
+                  <select
+                    value={inputData.category}
+                    onChange={(e) => handleInputChange(InputEnum.Category, e.target.value)}
+                    className="m-2 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg"
+                  >
+                    <option value="" className="option text-slate-700">Selecione uma categoria</option>
+                    {categoriesList.map((category) => (
+                      <option key={category} value={category} className="option text-slate-900">
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="text-amber-100 px-3 grid">
+                  Preço do produto
+                  <input
+                    type="text"
+                    onChange={(e) => handleInputChange(InputEnum.Price, e.target.value)}
+                    value={inputData.price}
+                    placeholder="Exemplo: R$ 1219.00"
+                    className="m-2 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg"
+                    required
+                  />
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="m-4 border border-amber-300 p-3 rounded-lg transition-opacity bg-amber-300 bg-opacity-30 hover:bg-opacity-50 text-slate-50"
+              >
+                Adicionar Produto
+              </button>
+            </form>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full bg-transparent text-slate-50">
+                {
+                  products.map((tool) => (
+                    <ProductCard key={tool.id} tool={tool} onUpdate={onUpdateProduct} />
+                  ))
+                }
             </div>
-            <button
-              type="submit"
-              className="m-4 border border-purple-500 p-3 rounded-lg transition-opacity bg-purple-600 bg-opacity-30 hover:bg-opacity-50 text-slate-50"
-            >
-              Adicionar Produto
-            </button>
-          </form>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full bg-transparent text-slate-50">
-              {
-                products.map((tool) => (
-                  <ProductCard key={tool.id} tool={tool} onUpdate={onUpdateProduct} />
-                ))
-              }
           </div>
         </div>
       </div>
