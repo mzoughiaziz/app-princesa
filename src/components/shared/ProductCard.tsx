@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 interface ProductCardProps {
     tool: Product,
-    onUpdate: (data: Partial<Product>) => void
+    onUpdate: any
 }
 
 
