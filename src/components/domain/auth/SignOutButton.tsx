@@ -12,9 +12,9 @@ export const SignOutButton = (props: Props) => {
     <button
       onClick={handleClick}
       type="button"
-      className="btn normal-case"
+      className="btn normal-case bg-neutral-200 text-zinc-900 hover:text-zinc-300"
     >
-      Sign Out
+      Sair
     </button>
   );
 };

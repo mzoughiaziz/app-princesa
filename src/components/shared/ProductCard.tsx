@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Product, InputEnum } from "../screens/Index";
+import { Product, InputEnum } from "../screens/MainPage";
 import { PencilSquareIcon, CheckIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 
@@ -42,7 +42,7 @@ const ProductCard = ({ tool, onUpdate }: ProductCardProps) => {
         <div>
           <input className={
             clsx(inputClasses,
-                "text-xl mb-2 font-bold text-slate-50",
+                "text-xl mb-2 font-bold text-slate-50 bg-gray-900",
                  {
                 'bg-gray-900': isEdit,
                 'cursor-text': isEdit
@@ -66,7 +66,7 @@ const ProductCard = ({ tool, onUpdate }: ProductCardProps) => {
           })} 
           value={inputData.category}
           placeholder="Categoria"
-          onChange={(e) => handleInputChange(InputEnum.Category, e.target.value)}
+          disabled
           />
           <input className={clsx(inputClasses, {
             'bg-gray-900': isEdit,
@@ -91,7 +91,7 @@ const ProductCard = ({ tool, onUpdate }: ProductCardProps) => {
                 <CheckIcon onClick={handleUpdate} className="h-6 w-6 text-green-500 absolute top-4 right-12 cursor-pointer" />
                 <XCircleIcon onClick={onClose} className="h-6 w-6 text-red-900 absolute top-4 right-4 cursor-pointer" />
             </> :
-            <button className="btn btn-active btn-ghost hidden group-hover:block absolute top-4 right-4 p-0" onClick={toggleIsEdit}>
+            <button className="btn btn-active btn-ghost block absolute top-4 right-4 p-0" onClick={toggleIsEdit}>
             <PencilSquareIcon className="h-6 w-6 text-slate-50 cursor-pointer" />
             </button>
     }
