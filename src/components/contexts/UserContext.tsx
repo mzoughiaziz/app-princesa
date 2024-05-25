@@ -55,7 +55,7 @@ const useAuthState = () => {
 const useSignIn = () => {
   const {dispatch} = useContext(AuthContext)
   return {
-    signIn: (user: User) => {
+    signIn: (user: any) => {
       dispatch({type: "SIGN_IN", payload: {user}})
     }
   }

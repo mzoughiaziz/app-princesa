@@ -1,6 +1,6 @@
 import { Dialog } from '@headlessui/react';
 import { lazy, Suspense, useState, useRef } from 'react';
-import { Outlet, RouteObject, useRoutes, BrowserRouter, Navigate } from 'react-router-dom';
+import { Outlet, RouteObject, useRoutes, BrowserRouter, Navigate, useNavigate } from 'react-router-dom';
 import { useAuthState } from '~/components/contexts/UserContext';
 import { SignOutButton } from '../domain/auth/SignOutButton';
 import { Link } from 'react-router-dom';
@@ -10,6 +10,8 @@ const Loading = () => <p className="p-4 w-full h-full text-center">Loading...</p
 const IndexScreen = lazy(() => import('~/components/screens/Index'));
 const Page404Screen = lazy(() => import('~/components/screens/404'));
 const MainPageScreen = lazy(() => import('~/components/screens/MainPage'));
+const PrivateRoute = lazy(() => import('~/components/router/ProtectedRoute')); 
+
 
 function Layout() {
   const { state } = useAuthState();
@@ -20,7 +22,6 @@ function Layout() {
     <div>
       <nav className="p-4 flex text-white items-center justify-between bg-slate-800">
         <p className="text-3xl">Produtos <span className="text-amber-300">Princesa Jóias</span></p>
-        {state.state === 'UNKNOWN' ? null : state.state === 'SIGNED_OUT' ? <Navigate replace to="/" /> : <SignOutButton />}
       </nav>
       <Outlet />
     </div>
@@ -36,6 +37,8 @@ export const Router = () => {
 };
 
 const InnerRouter = () => {
+const [isAuth, setIsAuth] = useState(false);
+
   const routes: RouteObject[] = [
     {
       path: '/',
@@ -43,7 +46,7 @@ const InnerRouter = () => {
       children: [
         {
           index: true,
-          element: <IndexScreen />,
+          element: <IndexScreen setIsAuth={setIsAuth} />,
         },
         {
           path: '*',
@@ -51,7 +54,13 @@ const InnerRouter = () => {
         },
         {
           path: '/produtos',
-          element: <MainPageScreen />,
+          element: <PrivateRoute isAuth={isAuth} />, 
+          children: [
+            {
+              index: true,
+              element: <MainPageScreen  setIsAuth={setIsAuth}  />,
+            },
+          ],
         },
       ],
     },

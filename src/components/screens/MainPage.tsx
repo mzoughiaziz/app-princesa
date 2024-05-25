@@ -156,14 +156,16 @@ function MainPage() {
                 </div>
                 <div className="text-amber-100 px-3 grid">
                   Imagem do produto
-                  <input
+                  <input type="file" />
+                  <button type="submit">Upload</button>
+                  {/* <input
                     type="text"
                     onChange={(e) => handleInputChange(InputEnum.Image, e.target.value)}
                     value={inputData.image}
                     placeholder="Imagem"
                     className="my-2 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg"
                     required
-                  />
+                  /> */}
                 </div>
                 <div className="text-amber-100 grid px-3">
                   Categoria do produto
