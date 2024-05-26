@@ -3,10 +3,14 @@ import { useAuthState } from '~/components/contexts/UserContext';
 import { Head } from '~/components/shared/Head';
 import { useFirestore, useStorage } from '~/lib/firebase';
 import { collection, query, getDocs, addDoc, doc, updateDoc, deleteDoc } from 'firebase/firestore';
-import { uploadBytesResumable, getDownloadURL, ref } from 'firebase/storage';
 import { ToastContainer, toast } from 'react-toastify';
-import { PencilSquareIcon } from '@heroicons/react/24/outline';
 import ProductCard from '../shared/ProductCard';
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
+import { v4 } from 'uuid';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -17,6 +21,7 @@ export type Product = {
   image: string;
   price: string;
   category: string;
+  removed: boolean;
 };
 
 export enum InputEnum {
@@ -29,21 +34,21 @@ export enum InputEnum {
 }
 
 function MainPage() {
-  const { state } = useAuthState();
   const [products, setProducts] = useState<any>([]);
   const firestore = useFirestore();
   const storage = useStorage();
   const [inputData, setInputData] = useState<Partial<Product>>({
     name: '',
     details: '',
-    image: '',
     price: '',
     category: '',
   });
+  const [imageUpload, setImageUpload] = useState(null);
+  const [imageUrls, setImageUrls] = useState([]);
+  const imagesListRef = ref(storage, "images/");
 
   let categoriesList = ['colares-pingentes', 'aneis', 'brincos', 'alianca-noivado', 'pulseira', 'alianca-namoro'];
 
-  const [image, setImage] = useState('');
   const [formError, setFormError] = useState<boolean>(false);
 
   useEffect(() => {
@@ -86,17 +91,24 @@ function MainPage() {
   };
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    let imgUrl;
     e.preventDefault();
 
     try {
+      if (imageUpload == null) return;
+
+      const imageRef = ref(storage, `images/${imageUpload?.name + v4()}`);
+      const snapshot = await uploadBytes(imageRef, imageUpload);
+      imgUrl = await getDownloadURL(snapshot.ref);
       const productsCollection = collection(firestore, 'products');
 
       const newProduct: Partial<Product> = {
         name: inputData.name,
         details: inputData.details,
-        image: inputData.image,
+        image: imgUrl,
         price: inputData.price,
         category: inputData.category,
+        removed: false
       };
 
       const docRef = await addDoc(productsCollection, newProduct);
@@ -154,18 +166,17 @@ function MainPage() {
                     required
                   />
                 </div>
-                <div className="text-amber-100 px-3 grid">
+                <div className="text-amber-100 px-3 grid ">
                   Imagem do produto
-                  <input type="file" />
-                  <button type="submit">Upload</button>
-                  {/* <input
-                    type="text"
-                    onChange={(e) => handleInputChange(InputEnum.Image, e.target.value)}
-                    value={inputData.image}
-                    placeholder="Imagem"
-                    className="my-2 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg"
-                    required
-                  /> */}
+                  <div className="grid">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(event) => {
+                        setImageUpload(event.target.files[0]);
+                      }}
+                    />
+                  </div>
                 </div>
                 <div className="text-amber-100 grid px-3">
                   Categoria do produto
@@ -204,7 +215,10 @@ function MainPage() {
               </button>
             </form>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full bg-transparent text-slate-50">
-              {products.map((tool) => (
+              {products.filter((tool) => !tool.removed).map((tool) => (
+                <ProductCard key={tool.id} tool={tool} onUpdate={onUpdateProduct} />
+              ))}
+              {products.filter((tool) => tool.removed).map((tool) => (
                 <ProductCard key={tool.id} tool={tool} onUpdate={onUpdateProduct} />
               ))}
             </div>
