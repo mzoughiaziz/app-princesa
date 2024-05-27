@@ -43,7 +43,7 @@ function MainPage() {
     price: '',
     category: '',
   });
-  const [imageUpload, setImageUpload] = useState(null);
+  const [imageUpload, setImageUpload] = useState<File | null>(null);
   const [imageUrls, setImageUrls] = useState([]);
   const imagesListRef = ref(storage, "images/");
 
@@ -173,7 +173,9 @@ function MainPage() {
                       type="file"
                       accept="image/*"
                       onChange={(event) => {
-                        setImageUpload(event.target.files[0]);
+                        if (event.target.files && event.target.files.length > 0) {
+                          setImageUpload(event.target.files[0]);
+                        }
                       }}
                     />
                   </div>
