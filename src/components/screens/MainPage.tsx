@@ -95,7 +95,19 @@ function MainPage() {
     e.preventDefault();
 
     try {
-      if (imageUpload == null) return;
+      if (imageUpload == null) {
+        toast.error('Nenhum imagem do produto foi escolhido!', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark',
+        });
+        return;
+      };
 
       const imageRef = ref(storage, `images/${imageUpload?.name + v4()}`);
       const snapshot = await uploadBytes(imageRef, imageUpload);

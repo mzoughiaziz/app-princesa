@@ -89,13 +89,11 @@ const ProductCard = ({ tool, onUpdate }: ProductCardProps) => {
             placeholder="Preco do Produto"
             onChange={(e) => handleInputChange(InputEnum.Price, e.target.value)}
             />
-            <input className={clsx(inputClasses, {
-              'bg-gray-900': isEdit,
-              'cursor-text': isEdit
-            })} 
-            value={inputData.image}
-            placeholder="URL da Imagem"
-            onChange={(e) => handleInputChange(InputEnum.Image, e.target.value)}
+            <img
+              className="pt-4 pl-5"
+              height={'150px'}
+              width={'150px'}
+              src={inputData.image}
             />
          </div>
          {
