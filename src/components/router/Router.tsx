@@ -58,7 +58,7 @@ const [isAuth, setIsAuth] = useState(false);
           children: [
             {
               index: true,
-              element: <MainPageScreen  setIsAuth={setIsAuth}  />,
+              element: <MainPageScreen />,
             },
           ],
         },
