@@ -189,6 +189,7 @@ function MainPage() {
                           setImageUpload(event.target.files[0]);
                         }
                       }}
+                      required
                     />
                   </div>
                 </div>
@@ -198,6 +199,7 @@ function MainPage() {
                     value={inputData.category}
                     onChange={(e) => handleInputChange(InputEnum.Category, e.target.value)}
                     className="my-2 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg"
+                    required
                   >
                     <option value="" className="option text-slate-700">
                       Selecione uma categoria
@@ -240,6 +242,19 @@ function MainPage() {
         </div>
       </div>
       <ToastContainer />
+      <div className="ss-go-top link-is-visible">
+          <a className="smoothscroll" title="Back to Top" href="#top">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              style={{ fill: "rgba(0, 0, 0, 1)", transform: ";msFilter:" }}
+            >
+              <path d="M6 4h12v2H6zm5 10v6h2v-6h5l-6-6-6 6z"></path>
+            </svg>
+          </a>
+      </div>
     </>
   );
 }

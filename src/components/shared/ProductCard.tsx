@@ -12,6 +12,7 @@ interface ProductCardProps {
 const ProductCard = ({ tool, onUpdate }: ProductCardProps) => {
     const [isEdit, setIsEdit] = useState<boolean>(false);
     const [inputData, setInputData] = useState<Partial<Product>>(tool);
+    let categoriesList = ['colares-pingentes', 'aneis', 'brincos', 'alianca-noivado', 'pulseira', 'alianca-namoro'];
 
     const toggleIsEdit = () => setIsEdit(prevIsEdit => !prevIsEdit);
 
@@ -73,14 +74,34 @@ const ProductCard = ({ tool, onUpdate }: ProductCardProps) => {
             placeholder="Detalhes do produto"
             onChange={(e) => handleInputChange(InputEnum.Details, e.target.value)}
             />
-            <input className={clsx(inputClasses, {
-              'bg-gray-900': isEdit,
-              'cursor-text': isEdit
-            })} 
-            value={inputData.category}
-            placeholder="Categoria"
-            disabled
-            />
+            {
+              isEdit ?
+              <>
+                <select
+                  value={inputData.category}
+                  onChange={(e) => handleInputChange(InputEnum.Category, e.target.value)}
+                  className="my-2 text-slate-50 bg-transparent border border-slate-700 focus:ring-slate-400 focus:outline-none p-4 rounded-lg"
+                  required
+                >
+                    <option value="" className="option text-slate-700">
+                      Selecione uma categoria
+                    </option>
+                    {categoriesList.map((category) => (
+                    <option key={category} value={category} className="option text-slate-900">
+                    {category}
+                    </option>
+                  ))}
+                </select>
+              </> :
+                <input className={clsx(inputClasses, {
+                  'bg-gray-900': isEdit,
+                  'cursor-text': isEdit
+                })} 
+                value={inputData.category}
+                placeholder="Categoria"
+                disabled
+                />
+            }
             <input className={clsx(inputClasses, {
               'bg-gray-900': isEdit,
               'cursor-text': isEdit

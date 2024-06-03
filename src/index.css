@@ -11,6 +11,103 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.ss-go-top {
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(200%);
+  transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+  position: fixed;
+  bottom: 2rem;
+  left: 4rem;
+}
+
+.ss-go-top a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border: none;
+  height: 6rem;
+  width: 6rem;
+  border-radius: 50%;
+  background-color: var(--banner-text-color);
+  transition: all 0.3s;
+  position: relative;
+}
+
+.ss-go-top svg {
+  height: 2.4rem;
+  width: 2.4rem;
+}
+
+.ss-go-top svg path {
+  fill: #fff;
+}
+
+.ss-go-top.link-is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0);
+}
+
+@media screen and (max-width: 1200px) {
+  .s-footer__contact-content .right-block {
+    margin-left: auto;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .ss-go-top {
+    bottom: 4.8rem;
+  }
+
+  .ss-go-top a {
+    height: 5.2rem;
+    width: 5.2rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .s-footer {
+    padding-top: var(--vspace-2);
+  }
+
+  .ss-copyright span {
+    display: block;
+  }
+
+  .ss-copyright span:after {
+    display: none;
+  }
+
+  .ss-go-top {
+    right: 3.2rem;
+  }
+
+  .ss-go-top a {
+    height: 4.8rem;
+    width: 4.8rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .ss-go-top {
+    bottom: 4rem;
+    right: 2rem;
+  }
+
+  .ss-go-top a {
+    height: 4rem;
+    width: 4rem;
+  }
+
+  .ss-go-top svg {
+    height: 1.6rem;
+    width: 1.6rem;
+  }
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
